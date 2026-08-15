@@ -32,14 +32,144 @@
 </head>
 
 <body style="background-color: black;">
+
+
+
+<style>
+
+
+
+/* ===== OVERLAY INICIO INVITACIÓN ===== */
+#overlayInicio{
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.overlay-contJulietao{
+    text-align:center;
+    color:white;
+    position:relative;
+    z-index: 5;
+}
+/* CONTENEDOR OVERLAY */
+#overlayInicio{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  overflow:hidden;
+}
+
+/* PUERTAS */
+.puerta{
+  position:absolute;
+  top:0;
+  width:50%;
+  height:100%;
+  background-image:url("cover.jpg");
+  background-size:cover;
+  background-position:center;
+  transition:transform 1.2s ease-in-out;
+  z-index: 1;
+}
+
+/* MITAD IZQUIERDA */
+.puerta-izq{
+  left:0;
+  background-position:left center;
+}
+
+/* MITAD DERECHA */
+.puerta-der{
+  right:0;
+  background-position:right center;
+}
+
+/* ANIMACIÓN AL ABRIR */
+.abrir .puerta-izq{
+  transform:translateX(-100%);
+}
+
+.abrir .puerta-der{
+  transform:translateX(100%);
+}
+
+:root{
+  --color-boton: #ff66c4;        /* color círculo */
+  --color-icono: #ffffff;        /* color triángulo */
+  --color-texto-play: #ffffff;   /* color texto */
+  --fuente-play: 'Montserrat', Arial, sans-serif;
+}
+/* BOTÓN PLAY GRANDE */
+#botonPlayGrande{
+  width:90px;
+  height:90px;
+  border-radius:30%;
+  background:var(--color-boton);
+  color:var(--color-icono);
+  font-size:46px;
+  display:flex;
+  justify-content:center;
+  margin:auto;
+  cursor:pointer;
+  box-shadow:0 10px 40px rgba(0,0,0,.45);
+  transition:.3s;
+}
+
+/* efecto hover bonito */
+#botonPlayGrande:hover{
+  transform:scale(1.08);
+  box-shadow:0 15px 50px rgba(0,0,0,.6);
+}
+
+/* TEXTO "TOCA PARA ABRIR INVITACIÓN" */
+.textoPlay{
+  margin-top:18px;
+  font-size:20px;
+  letter-spacing:1.5px;
+  font-weight:700;
+  color:var(--color-texto-play);
+  font-family:var(--fuente-play);
+  text-shadow:0 2px 8px rgba(0,0,0,.6);
+}
+
+
+</style>
+<!-- OVERLAY PLAY INICIAL -->
+<div id="overlayInicio">
+  <div class="puerta puerta-izq"></div>
+  <div class="puerta puerta-der"></div>
+  <div class="overlay-contJulietao">
+    <p class="textoPlay">Toca para abrir<br>la invitación</p>  
+    <div id="botonPlayGrande">▶</div>
+  </div>
+</div>
+
+
+
+
+
+
+
   <div class="background-container">
     <div class="background background-1"></div>
     <div class="background background-2"></div>
   </div>
 
+
+  
   <main>
     <section class="main">
-      <div class="decorations" id="decorations">
+
+
+
+
+
+
+      <!--<div class="decorations" id="decorations">
         <img class="img1" />
         <img class="img2" />
         <img class="img3" />
@@ -52,7 +182,7 @@
           <img class="first" id="c" src="media/icons/telon-left.png" />
           <img class="second" id="telon_hoja3" src="media/icons/telon-right.png" />
         </div>
-      </div>
+      </div>-->
 
 
 
@@ -365,6 +495,36 @@
       aplicarTematica(currentIndex);
     }, 5000);
   */
+
+ const overlay = document.getElementById("overlayInicio");
+
+
+
+// ▶ CLICK BOTÓN GRANDE (abrir invitación + reproducir música)
+botonPlayGrande.addEventListener("click", async () => {
+
+// ocultar botón inmediatamente
+botonPlayGrande.style.display = "none";
+document.querySelector(".textoPlay").style.display = "none";
+
+// abrir cortina
+overlay.classList.add("abrir");
+
+    // reproducir música
+    try{
+        //audio.muted = false;
+        music.play()
+    }catch(e){}
+
+    // ocultar overlay después de la animación
+    setTimeout(()=>{
+        overlay.style.display = "none";
+    },1200);
+
+});
+
+
+
 </script>
 
 
